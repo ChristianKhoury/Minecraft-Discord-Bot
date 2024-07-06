@@ -2,31 +2,17 @@ import discord
 from discord.ext import commands
 
 bot = commands.Bot("/", intents=discord.Intents.all())
-
-
-class CamelBot:
-    def __init__(self, bot):
-        self.token = None
-        self.channel = None
-        self.bot = bot
-
-        self.init_token()
-
-        self.bot.run(self.token)
-    
-
-    def init_token(self):
-        with open("token.txt", "r") as file:
-            self.token = file.readline()
-            channel_id = int(file.readline())
-            self.channel = self.bot.get_channel(channel_id)
+with open("token.txt", "r") as file:
+    token = file.readline()
+    channel_id = int(file.readline())
 
 
 @bot.event
 async def on_ready():
     print("Hello World! This is Mr. Camel Bot")
-
+    channel = bot.get_channel(channel_id)
+    await channel.send("Bot is alive!")
 
 
 if __name__ == "__main__":
-    CamelBot(bot)
+    bot.run(token)
